@@ -11,8 +11,8 @@ print_mem(){
 
 
 print_date(){
-#	date '+%Y年%m月%d日 %H:%M'
-	date '+%H:%M'
+date '+%Y年%m月%d日 %H:%M'
+#	date '+%H:%M'
 }
 
 export IDENTIFIER="unicode"
@@ -45,31 +45,29 @@ dwm_backlight () {
 }
 cpu_temperature () {
 	TMP=$(cat /sys/class/thermal/thermal_zone0/temp)
-	a=40
-	b=70
 	let "TEMP=($TMP/1000)"
 		printf " %s"  $TEMP
 	}
 
-cpu_used (){
+#cpu_used (){
 
-		TIME_INTERVAL=2
-		 
-		LAST_CPU_INFO=$(cat /proc/stat | grep -w cpu | awk '{print $2,$3,$4,$5,$6,$7,$8}')
-		LAST_SYS_IDLE=$(echo $LAST_CPU_INFO | awk '{print $4}')
-		LAST_TOTAL_CPU_T=$(echo $LAST_CPU_INFO | awk '{print $1+$2+$3+$4+$5+$6+$7}')
-		sleep ${TIME_INTERVAL}
-		NEXT_CPU_INFO=$(cat /proc/stat | grep -w cpu | awk '{print $2,$3,$4,$5,$6,$7,$8}')
-		NEXT_SYS_IDLE=$(echo $NEXT_CPU_INFO | awk '{print $4}')
-		NEXT_TOTAL_CPU_T=$(echo $NEXT_CPU_INFO | awk '{print $1+$2+$3+$4+$5+$6+$7}')
-		 
-		#系统空闲时间
-		SYSTEM_IDLE=`echo ${NEXT_SYS_IDLE} ${LAST_SYS_IDLE} | awk '{print $1-$2}'`
-		#CPU总时间
-		TOTAL_TIME=`echo ${NEXT_TOTAL_CPU_T} ${LAST_TOTAL_CPU_T} | awk '{print $1-$2}'`
-		CPU_USAGE=`echo ${SYSTEM_IDLE} ${TOTAL_TIME} | awk '{printf "%.2f", 100-$1/$2*100}'`
-		printf " %s%%" $CPU_USAGE
-}
+#		TIME_INTERVAL=1
+#		 
+#		LAST_CPU_INFO=$(cat /proc/stat | grep -w cpu | awk '{print $2,$3,$4,$5,$6,$7,$8}')
+#		LAST_SYS_IDLE=$(echo $LAST_CPU_INFO | awk '{print $4}')
+#		LAST_TOTAL_CPU_T=$(echo $LAST_CPU_INFO | awk '{print $1+$2+$3+$4+$5+$6+$7}')
+#		sleep ${TIME_INTERVAL}
+#		NEXT_CPU_INFO=$(cat /proc/stat | grep -w cpu | awk '{print $2,$3,$4,$5,$6,$7,$8}')
+#		NEXT_SYS_IDLE=$(echo $NEXT_CPU_INFO | awk '{print $4}')
+#		NEXT_TOTAL_CPU_T=$(echo $NEXT_CPU_INFO | awk '{print $1+$2+$3+$4+$5+$6+$7}')
+#		 
+#		#系统空闲时间
+#		SYSTEM_IDLE=`echo ${NEXT_SYS_IDLE} ${LAST_SYS_IDLE} | awk '{print $1-$2}'`
+#		#CPU总时间
+#		TOTAL_TIME=`echo ${NEXT_TOTAL_CPU_T} ${LAST_TOTAL_CPU_T} | awk '{print $1-$2}'`
+#		CPU_USAGE=`echo ${SYSTEM_IDLE} ${TOTAL_TIME} | awk '{printf "%.2f", 100-$1/$2*100}'`
+#		printf " %s%%" $CPU_USAGE
+#}
 
 #dwm_date () {
 #    printf "%s" "$SEP1"
@@ -80,7 +78,7 @@ cpu_used (){
 #    fi
 #    printf "%s\n" "$SEP2"
 #}
-xsetroot -name "$(cpu_used) 💿 $(print_mem)M $(cpu_temperature) $(dwm_backlight) $(dwm_battery)  $(print_date)"
+xsetroot -name " 💿 $(print_mem)M $(cpu_temperature)度 $(dwm_backlight) $(dwm_battery) $(print_date)"
 
 
 exit 0
